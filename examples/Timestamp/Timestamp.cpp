@@ -1,4 +1,5 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+#include "../../src/SdFat.h"
 // Warning, Particle.timeSync() seems to take a while to happen.
 // You may want to set your time zone with Time.zone(offaet).
 /*
@@ -64,12 +65,12 @@ void setup(void) {
   }
   cout << F("Type any character to start\n");
   while (!Serial.available()) {
-    SysCall::yield();  
+    SysCall::yield();
   }
-  
+
   // Request time sync so example works.
   Particle.syncTime();
-  
+
   // initialize the SD card at SPI_HALF_SPEED to avoid bus errors with
   // breadboards.  use SPI_FULL_SPEED for better performance.
   if (!sd.begin(chipSelect, SPI_HALF_SPEED)) {
@@ -101,7 +102,7 @@ void setup(void) {
    * The callback can be disabled by the call
    * SdFile::dateTimeCallbackCancel()
    */
-   
+
   // set date time callback function
   SdFile::dateTimeCallback(dateTime);
 
@@ -111,7 +112,7 @@ void setup(void) {
     cout << ' ' << Time.second();
   }
   cout << endl;
-  
+
   // create a new file with callback timestamps
   if (!file.open("callback.txt", O_CREAT | O_WRITE)) {
     error("open callback.txt failed");
@@ -169,3 +170,4 @@ void setup(void) {
 }
 
 void loop(void) {}
+#endif

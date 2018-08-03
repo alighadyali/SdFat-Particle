@@ -1,4 +1,5 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+#include "../../src/SdFat.h"
 /*
  * This program demonstrates the freeClusterCount() call.
  */
@@ -30,7 +31,7 @@ void printFreeSpace() {
 //------------------------------------------------------------------------------
 void setup() {
   Serial.begin(9600);
-  // Wait for USB Serial 
+  // Wait for USB Serial
   while (!Serial) {
     SysCall::yield();
   }
@@ -51,22 +52,22 @@ void setup() {
   if (!sd.begin(chipSelect, SPI_HALF_SPEED)) {
     sd.initErrorHalt();
   }
-  // Insure no TEST_FILE. 
+  // Insure no TEST_FILE.
   sd.remove(TEST_FILE);
-  
+
   cout << F("\nFirst call to freeClusterCount scans the FAT.\n\n");
   printFreeSpace();
-  
+
   cout << F("Create and write to ") << TEST_FILE << endl;
   if (!file.open(TEST_FILE, O_WRITE | O_CREAT)) {
     sd.errorHalt(F("Create failed"));
   }
   file.print(F("Cause a cluster to be allocated"));
   file.close();
-  
+
   cout << F("\nSecond freeClusterCount call is faster if\n");
   cout << F("MAINTAIN_FREE_CLUSTER_COUNT is nonzero.\n\n");
-  
+
   printFreeSpace();
 
   cout << F("Remove ") << TEST_FILE << endl << endl;
@@ -75,3 +76,4 @@ void setup() {
 }
 //------------------------------------------------------------------------------
 void loop() {}
+#endif

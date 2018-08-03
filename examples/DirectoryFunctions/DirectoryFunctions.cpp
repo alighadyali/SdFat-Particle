@@ -1,4 +1,6 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+
+#include "../../src/SdFat.h"
 /*
  * Example use of chdir(), ls(), mkdir(), and  rmdir().
  */
@@ -27,8 +29,8 @@ ArduinoInStream cin(Serial, cinBuf, sizeof(cinBuf));
 //------------------------------------------------------------------------------
 void setup() {
   Serial.begin(9600);
-  
-  // Wait for USB Serial 
+
+  // Wait for USB Serial
   while (!Serial) {
     SysCall::yield();
   }
@@ -38,19 +40,19 @@ void setup() {
   // Wait for input line and discard.
   cin.readline();
   cout << endl;
-  
+
   // Initialize the SD card at SPI_HALF_SPEED to avoid bus errors with
   // breadboards.  use SPI_FULL_SPEED for better performance.
   if (!sd.begin(SD_CHIP_SELECT, SPI_HALF_SPEED)) {
     sd.initErrorHalt();
   }
-  if (sd.exists("Folder1") 
+  if (sd.exists("Folder1")
     || sd.exists("Folder1/file1.txt")
     || sd.exists("Folder1/File2.txt")) {
     error("Please remove existing Folder1, file1.txt, and File2.txt");
   }
   int rootFileCount = 0;
-  sd.vwd()->rewind();   
+  sd.vwd()->rewind();
   while (file.openNext(sd.vwd(), O_READ)) {
     if (!file.isHidden()) {
       rootFileCount++;
@@ -62,7 +64,7 @@ void setup() {
   }
   if (rootFileCount) {
     cout << F("\nPlease use an empty SD for best results.\n\n");
-    delay(1000);    
+    delay(1000);
   }
   // Create a new folder.
   if (!sd.mkdir("Folder1")) {
@@ -120,3 +122,5 @@ void setup() {
 //------------------------------------------------------------------------------
 // Nothing happens in loop.
 void loop() {}
+
+#endif

@@ -1,4 +1,5 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+#include "../../src/SdFat.h"
 // Function to read a CSV text file one field at a time.
 
 #define CS_PIN SS
@@ -46,8 +47,8 @@ size_t readField(File* file, char* str, size_t size, const char* delim) {
 //------------------------------------------------------------------------------
 void setup() {
   Serial.begin(9600);
-  
-  // Wait for USB Serial 
+
+  // Wait for USB Serial
   while (!Serial) {
     SysCall::yield();
   }
@@ -55,7 +56,7 @@ void setup() {
   while (Serial.read() <= 0) {
     SysCall::yield();
   }
-  
+
   // Initialize the SD.
   if (!SD.begin(CS_PIN)) errorHalt("begin failed");
 
@@ -80,7 +81,7 @@ void setup() {
 
   size_t n;      // Length of returned field with delimiter.
   char str[20];  // Must hold longest field with delimiter and zero byte.
-  
+
   // Read the file and print fields.
   while (true) {
     n = readField(&file, str, sizeof(str), ",\n");
@@ -91,7 +92,7 @@ void setup() {
     // Print the type of delimiter.
     if (str[n-1] == ',' || str[n-1] == '\n') {
       Serial.print(str[n-1] == ',' ? F("comma: ") : F("endl:  "));
-      
+
       // Remove the delimiter.
       str[n-1] = 0;
     } else {
@@ -107,4 +108,4 @@ void setup() {
 void loop() {
 }
 
-
+#endif

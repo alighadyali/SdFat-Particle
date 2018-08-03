@@ -1,4 +1,5 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+#include "../../src/SdFat.h"
 // Use smaller transfer on Core.
 /*
  * This program is a simple binary read/write benchmark.
@@ -83,7 +84,7 @@ void cidDmp() {
 void setup() {
   Serial.begin(9600);
 
-  // Wait for USB Serial 
+  // Wait for USB Serial
   while (!Serial) {
     SysCall::yield();
   }
@@ -130,7 +131,7 @@ void loop() {
   if (!file.open("bench.dat", O_CREAT | O_TRUNC | O_RDWR)) {
     error("open failed");
   }
-  
+
   // fill buf with known data
   for (uint16_t i = 0; i < (BUF_SIZE-2); i++) {
     buf[i] = 'A' + (i % 26);
@@ -179,7 +180,7 @@ void loop() {
   cout << endl <<F("read speed and latency") << endl;
   cout << F("speed,max,min,avg") << endl;
   cout << F("KB/Sec,usec,usec,usec") << endl;
-  
+
   // do read test
   for (uint8_t nTest = 0; nTest < READ_COUNT; nTest++) {
     file.rewind();
@@ -191,7 +192,7 @@ void loop() {
       buf[BUF_SIZE-1] = 0;
       uint32_t m = micros();
       int32_t nr = file.read(buf, sizeof(buf));
-      if (nr != sizeof(buf)) {    
+      if (nr != sizeof(buf)) {
         sd.errorPrint("read failed");
         file.close();
         return;
@@ -208,7 +209,7 @@ void loop() {
         error("data check");
       }
     }
-    s = file.fileSize();    
+    s = file.fileSize();
     t = millis() - t;
     cout << s/t <<',' << maxLatency << ',' << minLatency;
     cout << ',' << totalLatency/n << endl;
@@ -216,3 +217,5 @@ void loop() {
   cout << endl << F("Done") << endl;
   file.close();
 }
+
+#endif

@@ -1,4 +1,5 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+#include "../../src/SdFat.h"
 // Don't connect to the cloud to reduce time jitter.
 // WARNING you must use safe mode for OTA flash if you use manual mode.
 // Remove comment on next line to decrease time jitter.
@@ -37,7 +38,7 @@ void acquireData(data_t* data) {
   data->adc[0] = analogRead(A0);
   data->adc[1] = analogRead(A1);
   data->adc[2] = analogRead(A6);
-  data->adc[3] = analogRead(A7);  
+  data->adc[3] = analogRead(A7);
 }
 
 // Print a data record.
@@ -301,7 +302,7 @@ void dumpData() {
 //------------------------------------------------------------------------------
 // log data
 // max number of blocks to erase per erase call
-uint32_t const ERASE_SIZE = 262144L;
+const uint32_t ERASE_SIZE = 262144L;
 void logData() {
   uint32_t bgnBlock, endBlock;
 
@@ -370,7 +371,7 @@ void logData() {
   // Set chip select high if other devices use SPI.
   if (useSharedSpi) {
     sd.card()->chipSelectHigh();
-  }  
+  }
   // Initialize queues.
   emptyHead = emptyTail = 0;
   fullHead = fullTail = 0;
@@ -431,7 +432,7 @@ void logData() {
       uint32_t delta = micros() - logTime;
       if (delta > maxDelta) maxDelta = delta;
       if (delta < minDelta) minDelta = delta;
-      
+
       if (curBlock == 0) {
         overrun++;
       } else {
@@ -517,8 +518,8 @@ void setup(void) {
     pinMode(ERROR_LED_PIN, OUTPUT);
   }
   Serial.begin(9600);
-  
-  // Wait for USB Serial 
+
+  // Wait for USB Serial
   while (!Serial) {
     SysCall::yield();
   }
@@ -574,3 +575,5 @@ void loop(void) {
     Serial.println(F("Invalid entry"));
   }
 }
+
+#endif

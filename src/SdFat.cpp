@@ -24,7 +24,7 @@ void SdFatBase::errorHalt(Print* pr) {
   SysCall::halt();
 }
 //------------------------------------------------------------------------------
-void SdFatBase::errorHalt(Print* pr, char const* msg) {
+void SdFatBase::errorHalt(Print* pr, const char* msg) {
   errorPrint(pr, msg);
   SysCall::halt();
 }
@@ -39,7 +39,7 @@ void SdFatBase::errorPrint(Print* pr) {
   pr->println(cardErrorData(), HEX);
 }
 //------------------------------------------------------------------------------
-void SdFatBase::errorPrint(Print* pr, char const* msg) {
+void SdFatBase::errorPrint(Print* pr, const char* msg) {
   pr->print(F("error: "));
   pr->println(msg);
   errorPrint(pr);
@@ -50,7 +50,7 @@ void SdFatBase::initErrorHalt(Print* pr) {
   SysCall::halt();
 }
 //------------------------------------------------------------------------------
-void SdFatBase::initErrorHalt(Print* pr, char const *msg) {
+void SdFatBase::initErrorHalt(Print* pr, const char *msg) {
   pr->println(msg);
   initErrorHalt(pr);
 }
@@ -70,11 +70,19 @@ void SdFatBase::initErrorPrint(Print* pr) {
     pr->println(F("No error found."));
   }
 }
+
+SdFatBase::~SdFatBase() {
+}
+
 //------------------------------------------------------------------------------
-void SdFatBase::initErrorPrint(Print* pr, char const *msg) {
+void SdFatBase::initErrorPrint(Print* pr, const char *msg) {
   pr->println(msg);
   initErrorPrint(pr);
 }
+
+SdFat::~SdFat() {
+}
+
 #if defined(ARDUINO) || defined(DOXYGEN)
 //------------------------------------------------------------------------------
 void SdFatBase::errorPrint(Print* pr, const __FlashStringHelper* msg) {

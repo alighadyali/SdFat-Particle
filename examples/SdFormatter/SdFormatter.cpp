@@ -1,4 +1,5 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+#include "../../src/SdFat.h"
 /*
  * This program will format an SD or SDHC card.
  * Warning all data will be deleted!
@@ -53,8 +54,8 @@ uint32_t fatSize;
 uint32_t dataStart;
 
 // constants for file system structure
-uint16_t const BU16 = 128;
-uint16_t const BU32 = 8192;
+const uint16_t BU16 = 128;
+const uint16_t BU32 = 8192;
 
 //  strings needed in file system structures
 char noName[] = "NO NAME    ";
@@ -382,7 +383,7 @@ void makeFat32() {
 }
 //------------------------------------------------------------------------------
 // flash erase all data
-uint32_t const ERASE_SIZE = 262144L;
+const uint32_t ERASE_SIZE = 262144L;
 void eraseCard() {
   cout << endl << F("Erasing\n");
   uint32_t firstBlock = 0;
@@ -434,7 +435,7 @@ void formatCard() {
 void setup() {
   char c;
   Serial.begin(9600);
-  // Wait for USB Serial 
+  // Wait for USB Serial
   while (!Serial) {
     SysCall::yield();
   }
@@ -444,7 +445,7 @@ void setup() {
   }
   // Discard any extra characters.
   do {delay(10);} while (Serial.read() >= 0);
-  
+
   cout << F(
          "\n"
          "This program can erase and/or format SD/SDHC cards.\n"
@@ -517,3 +518,4 @@ void setup() {
 }
 //------------------------------------------------------------------------------
 void loop() {}
+#endif

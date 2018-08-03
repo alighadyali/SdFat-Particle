@@ -1,4 +1,5 @@
-#include "SdFat.h"
+#ifdef EXAMPLE
+#include "../../src/SdFat.h"
 /*
  * This program attempts to initialize an SD card and analyze its structure.
  * Port of Arduino version.
@@ -140,8 +141,8 @@ void volDmp() {
 //------------------------------------------------------------------------------
 void setup() {
   Serial.begin(9600);
-  
-  // Wait for USB Serial 
+
+  // Wait for USB Serial
   while (!Serial) {
     SysCall::yield();
   }
@@ -234,3 +235,4 @@ void loop() {
   }
   volDmp();
 }
+#endif

@@ -81,6 +81,8 @@ class SdFatBase : public FatFileSystem {
     return m_sdCard.begin(spi, csPin, divisor) &&
            FatFileSystem::begin();
   }
+
+  virtual ~SdFatBase();
   /** \return Pointer to SD card object */
   SdSpiCard *card() {
     return &m_sdCard;
@@ -106,7 +108,7 @@ class SdFatBase : public FatFileSystem {
    *
    * \param[in] msg Message to print.
    */
-  void errorHalt(char const* msg) {
+  void errorHalt(const char* msg) {
     errorHalt(&Serial, msg);
   }
   /** %Print msg, any SD error code, and halt.
@@ -114,7 +116,7 @@ class SdFatBase : public FatFileSystem {
    * \param[in] pr Print destination.
    * \param[in] msg Message to print.
    */
-  void errorHalt(Print* pr, char const* msg);
+  void errorHalt(Print* pr, const char* msg);
 
   /** %Print any SD error code to Serial */
   void errorPrint() {
@@ -136,7 +138,7 @@ class SdFatBase : public FatFileSystem {
    * \param[in] pr Print destination.
    * \param[in] msg Message to print.
    */
-  void errorPrint(Print* pr, char const* msg);
+  void errorPrint(Print* pr, const char* msg);
 
   /** Diagnostic call to initialize FatFileSystem - use for
    *  diagnostic purposes only.
@@ -158,14 +160,14 @@ class SdFatBase : public FatFileSystem {
    *
    * \param[in] msg Message to print.
    */
-  void initErrorHalt(char const *msg) {
+  void initErrorHalt(const char *msg) {
     initErrorHalt(&Serial, msg);
   }
   /**Print message, error details, and halt after SdFatBase::init() fails.
    * \param[in] pr Print device.
    * \param[in] msg Message to print.
    */
-  void initErrorHalt(Print* pr, char const *msg);
+  void initErrorHalt(Print* pr, const char *msg);
 
   /** Print error details after SdFat::init() fails. */
   void initErrorPrint() {
@@ -180,7 +182,7 @@ class SdFatBase : public FatFileSystem {
    *
    * \param[in] msg Message to print.
    */
-  void initErrorPrint(char const *msg) {
+  void initErrorPrint(const char *msg) {
     initErrorPrint(&Serial, msg);
   }
   /**Print message and error details and halt after SdFatBase::init() fails.
@@ -188,7 +190,7 @@ class SdFatBase : public FatFileSystem {
    * \param[in] pr Print destination.
    * \param[in] msg Message to print.
    */
-  void initErrorPrint(Print* pr, char const *msg);
+  void initErrorPrint(Print* pr, const char *msg);
 #if defined(ARDUINO) || defined(DOXYGEN)
   /** %Print msg, any SD error code, and halt.
    *
@@ -274,6 +276,7 @@ class SdFat : public SdFatBase {
     m_spi.setSpiIf(spiIf < SPI_INTERFACE_COUNT ? spiIf : 0);
   }
 #endif  // IMPLEMENT_SPI_INTERFACE_SELECTION
+  virtual ~SdFat();
 
   /** Initialize SD card and file system.
    *
