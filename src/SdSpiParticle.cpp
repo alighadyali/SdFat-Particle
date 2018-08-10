@@ -41,6 +41,10 @@ void SD_SPI_DMA_TransferComplete_Callback(void) {
     SPI_DMA_TransferCompleted = true;
 }
 //------------------------------------------------------------------------------
+SdSpi::~SdSpi() {
+
+}
+//------------------------------------------------------------------------------
 void SdSpi::begin(uint8_t chipSelectPin) {
   spiPtr[m_spiIf]->begin(chipSelectPin);
 }

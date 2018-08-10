@@ -24,6 +24,7 @@
 #ifndef SdFatConfig_h
 #define SdFatConfig_h
 #include <stdint.h>
+#include "Particle.h"
 #ifdef __AVR__
 #include <avr/io.h>
 #endif  // __AVR__
@@ -88,13 +89,13 @@
  * The default definition allows Uno shields to be used on other boards.
  */
 /** Software SPI Master Out Slave In pin */
-uint8_t const SOFT_SPI_MOSI_PIN = 11;
+const uint8_t SOFT_SPI_MOSI_PIN = 11;
 /** Software SPI Master In Slave Out pin */
-uint8_t const SOFT_SPI_MISO_PIN = 12;
+const uint8_t SOFT_SPI_MISO_PIN = 12;
 /** Software SPI Clock pin */
-uint8_t const SOFT_SPI_SCK_PIN = 13;
+const uint8_t SOFT_SPI_SCK_PIN = 13;
 //------------------------------------------------------------------------------
-/** 
+/**
  * Set MAINTAIN_FREE_CLUSTER_COUNT nonzero to keep the count of free clusters
  * updated.  This will increase the speed of the freeClusterCount() call
  * after the first call.  Extra flash will be required.
@@ -222,3 +223,8 @@ const uint8_t SPI_SCK_INIT_DIVISOR = 128;
 #define IMPLEMENT_SPI_INTERFACE_SELECTION 0
 #endif  // SPI_INTERFACE_COUNT > 1
 #endif  // SdFatConfig_h
+
+#ifndef USE_SPI_LIB_DMA
+#define USE_SPI_LIB_DMA 0
+#endif
+

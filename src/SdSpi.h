@@ -32,6 +32,10 @@
  */
 class SdSpiBase {
  public:
+  //destructor
+  virtual ~SdSpiBase() {
+
+  }
   /** Initialize the SPI bus.
    *
    * \param[in] chipSelectPin SD card chip select pin.
@@ -82,6 +86,9 @@ class SdSpi : public SdSpiBase {
 class SdSpi {
 #endif  // SD_SPI_CONFIGURATION >= 3
  public:
+  //destrcutor
+  virtual ~SdSpi();
+
   /** Initialize the SPI bus.
    *
    * \param[in] chipSelectPin SD card chip select pin.
@@ -141,6 +148,11 @@ class SdSpiLib : public SdSpiBase {
 class SdSpiLib {
 #endif  // SD_SPI_CONFIGURATION >= 3
  public:
+  //destructor
+  virtual ~SdSpiLib() {
+
+  }
+
   /** Initialize the SPI bus.
    *
    * \param[in] chipSelectPin SD card chip select pin.
@@ -250,6 +262,10 @@ class SdSpiLib {
 template<uint8_t MisoPin, uint8_t MosiPin, uint8_t SckPin>
 class SdSpiSoft : public SdSpiBase {
  public:
+  //destructor
+  virtual ~SdSpiSoft() {
+
+  }
   /** Initialize the SPI bus.
    *
    * \param[in] chipSelectPin SD card chip select pin.
@@ -323,6 +339,7 @@ typedef SdSpiLib SpiDefault_t;
 #else  // SpiDefault_t
 /** Default is custom fast SPI. */
 typedef SdSpi SpiDefault_t;
+
 #endif  // SpiDefault_t
 //------------------------------------------------------------------------------
 // Use of in-line for AVR to save flash.
